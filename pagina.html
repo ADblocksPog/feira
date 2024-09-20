@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de 1 a 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4; /* Cor padrão */
+            background-size: cover; /* Faz a imagem cobrir toda a tela */
+            transition: background-color 0.3s; /* Transição suave */
+        }
+        .avaliacao {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco semi-transparente */
+            text-align: center;
+        }
+        .estrelas {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .estrela {
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+        .estrela.selected,
+        .estrela:hover,
+        .estrela:hover ~ .estrela {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="avaliacao">
+    <h2>Avalie de 1 a 10</h2>
+    <div class="estrelas" id="estrelas">
+        <span class="estrela" data-value="1">★</span>
+        <span class="estrela" data-value="2">★</span>
+        <span class="estrela" data-value="3">★</span>
+        <span class="estrela" data-value="4">★</span>
+        <span class="estrela" data-value="5">★</span>
+        <span class="estrela" data-value="6">★</span>
+        <span class="estrela" data-value="7">★</span>
+        <span class="estrela" data-value="8">★</span>
+        <span class="estrela" data-value="9">★</span>
+        <span class="estrela" data-value="10">★</span>
+    </div>
+    <button id="enviar">Enviar Avaliação</button>
+    <p id="mensagem" style="color: red; display: none;"></p>
+
+    <label for="url-imagem">URL da imagem de fundo:</label>
+    <input type="text" id="url-imagem" placeholder="Insira a URL da imagem">
+</div>
+
+<script>
+    const estrelas = document.querySelectorAll('.estrela');
+    let avaliacaoSelecionada = 0;
+
+    estrelas.forEach(estrela => {
+        estrela.addEventListener('click', () => {
+            avaliacaoSelecionada = estrela.getAttribute('data-value');
+            estrelas.forEach((e, index) => {
+                e.classList.toggle('selected', index < avaliacaoSelecionada);
+            });
+        });
+    });
+
+    document.getElementById('enviar').addEventListener('click', () => {
+        const mensagem = document.getElementById('mensagem');
+        if (avaliacaoSelecionada === 0) {
+            mensagem.textContent = 'Por favor, selecione uma avaliação antes de enviar.';
+            mensagem.style.display = 'block';
+        } else {
+            mensagem.style.display = 'none';
+            alert(`Você avaliou com: ${avaliacaoSelecionada} estrelas!`);
+            // Aqui você pode adicionar o código para enviar a avaliação
+        }
+    });
+
+    document.getElementById('url-imagem').addEventListener('input', (event) => {
+        document.body.style.backgroundImage = `url(${event.target.value})`;
+    });
+</script>
+
+</body>
+</html>
